@@ -8,7 +8,8 @@ package br.com.labexame.domain;
  */
 public enum TipoExame {
 
-	ANALISE_CLINICA("Análise Clínica"),
+	ANALISE("Análise"),
+	CLINICA("Clínica"),
 	IMAGEM("Imagem");
 
 	private String descricao;

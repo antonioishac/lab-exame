@@ -41,8 +41,4 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   profiles:
-    active: native
-  
-  liquibase:
-    change-log: classpath:db/liquibase-changelog.xml  
-    enabled: true
+    active: prod

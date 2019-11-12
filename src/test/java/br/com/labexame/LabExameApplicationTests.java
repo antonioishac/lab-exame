@@ -1,12 +1,9 @@
 package br.com.labexame;
 
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
+//@SpringBootTest
 class LabExameApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
