@@ -1,5 +1,5 @@
-server:
-  port: 8080
+#server:
+#  port: 8080
 
 logging:
   level:
@@ -16,10 +16,7 @@ spring:
       org.hibernate.envers.revision_field_name: ID_REVI
       org.hibernate.envers.revision_type_field_name: ST_REVI
       org.hibernate.envers.store_data_at_delete: true
-  datasource:
-    
-    #mysql://i3areu87xgpj1nru:veo6vpvnr6zusy3t@lolyz0ok3stvj6f0.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/u7uk2rg02mlhgmid
-    
+  datasource:        
     type: com.zaxxer.hikari.HikariDataSource
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
@@ -29,7 +26,7 @@ spring:
       # NUMERO MAXIMO DO POOL DE CONEXAO
       maximum-pool-size: 100
       idle-timeout: 60000
-      pool-name: clientesCP
+      pool-name: labexecCP
       # CONFIGURANDO PARA 60 SEG
       connection-timeout: 120000
       max-lifetime: 2000000

@@ -26,7 +26,7 @@ spring:
       # NUMERO MAXIMO DO POOL DE CONEXAO
       maximum-pool-size: 100
       idle-timeout: 60000
-      pool-name: clientesCP
+      pool-name: labexecCP
       # CONFIGURANDO PARA 60 SEG
       connection-timeout: 120000
       max-lifetime: 2000000
