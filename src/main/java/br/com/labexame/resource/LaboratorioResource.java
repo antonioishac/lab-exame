@@ -49,7 +49,7 @@ public class LaboratorioResource {
 
 	@PutMapping("/{codigo}")
 	@ApiOperation(value = "Atualizar um Laborat\u00f3rio", response = Laboratorio.class,
-	notes = "Essa opera\u00e7\u00e3o um laborat\u00f3rio e uma lista de endere\u00e7os")
+	notes = "Essa opera\u00e7\u00e3o atualiza um laborat\u00f3rio e uma lista de endere\u00e7os")
 	public ResponseEntity<Laboratorio> atualizarLaboratorio(@PathVariable Long codigo, @RequestBody Laboratorio laboratorio) {
 		Laboratorio laboratorioSalvo = laboratorioService.atualizarLaboratorio(codigo, laboratorio);
 		return ResponseEntity.ok(laboratorioSalvo);
