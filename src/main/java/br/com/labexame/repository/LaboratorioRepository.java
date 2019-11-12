@@ -37,6 +37,6 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long>,
 	@Transactional
     @Modifying
     @Query("UPDATE Laboratorio SET status = ?1 where id = ?2")
-    void remover(Status status, Long id);
+    void inativar(Status status, Long id);
 
 }

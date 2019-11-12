@@ -77,11 +77,11 @@ public class LaboratorioService {
 	}
 
 	/**
-	 * Método para inativar um laboratório logicamente.
+	 * M\u00e9todo para inativar um laborat\u00f3rio logicamente.
 	 *
 	 * @param codigo
 	 */
-	public void removerLaboratorio(Long codigo) {
+	public void inativarLaboratorio(Long codigo) {
 		Optional<Laboratorio> laboratorioAtivo = laboratorioRepository.findById(codigo);
 		if (!laboratorioAtivo.isPresent()) {
 			throw new LaboratorioNaoExisteException();
@@ -89,7 +89,7 @@ public class LaboratorioService {
 		else if (laboratorioAtivo.get().getStatus().equals(Status.INATIVO)) {
 			throw new LaboratorioInativoException();
 		}
-		laboratorioRepository.remover(Status.INATIVO, codigo);
+		laboratorioRepository.inativar(Status.INATIVO, codigo);
 	}
 
 	/**
@@ -104,6 +104,23 @@ public class LaboratorioService {
 			throw new LaboratorioNaoExisteException();
 		}
 		return existeLaboratorio.get();
+	}
+
+	/**
+	 * M\u00e9todo que verifica se um laborat\u00f3rio existe e est\u00e1 ativo.
+	 *
+	 * @param codigo
+	 * @return Boolean
+	 */
+	public void laboratorioAtivo(Long codigo) {
+		Optional<Laboratorio> laboratorioAtivo = laboratorioRepository.findById(codigo);
+		if (laboratorioAtivo.isPresent()) {
+			if (Status.INATIVO.equals(laboratorioAtivo.get().getStatus())) {
+				throw new LaboratorioInativoException(laboratorioAtivo.get().getId());
+			}
+			return;
+		}
+		throw new LaboratorioNaoExisteException();
 	}
 
 }

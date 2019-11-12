@@ -47,7 +47,7 @@ public class Exame implements Serializable {
 	@Column(name = "TIPO")
 	private TipoExame tipo;
 
-	@NotNull(message = "labexame-exa-sta")
+	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	private Status status;
 

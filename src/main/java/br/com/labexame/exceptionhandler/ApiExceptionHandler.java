@@ -71,7 +71,7 @@ public class ApiExceptionHandler {
         final String errorCode = exception.getCode();
         final HttpStatus status = exception.getStatus();
 
-        final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
+        final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale, exception.getValue()));
         return ResponseEntity.badRequest().body(errorResponse);
     }
 

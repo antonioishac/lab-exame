@@ -8,11 +8,13 @@ public class BusinessException extends RuntimeException {
 
 	private final String code;
     private final HttpStatus status;
+    private final Long[] value;
 
-    public BusinessException(String code, HttpStatus status) {
+    public BusinessException(String code, HttpStatus status, Long... value) {
     	super();
     	this.code = code;
     	this.status = status;
+    	this.value = value;
     }
 
     /**
@@ -26,5 +28,12 @@ public class BusinessException extends RuntimeException {
 	 */
 	public HttpStatus getStatus() {
 		return status;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public Long[] getValue() {
+		return value;
 	}
 }

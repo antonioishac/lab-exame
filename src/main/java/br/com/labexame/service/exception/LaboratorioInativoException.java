@@ -13,4 +13,8 @@ public class LaboratorioInativoException extends BusinessException {
 		super("labexame-lab-ina", HttpStatus.BAD_REQUEST);
 	}
 
+	public LaboratorioInativoException(Long codigo) {
+		super("labexame-lab-ina-exc", HttpStatus.BAD_REQUEST, codigo);
+	}
+
 }
