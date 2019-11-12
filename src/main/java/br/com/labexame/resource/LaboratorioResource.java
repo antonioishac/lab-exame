@@ -24,7 +24,10 @@ import br.com.labexame.domain.Status;
 import br.com.labexame.event.RecursoCriadoEvent;
 import br.com.labexame.service.LaboratorioService;
 import br.com.labexame.service.filter.LaboratorioFilter;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "API referente a Laborat\u00f3rio")
 @RestController
 @RequestMapping("/api/laboratorio")
 public class LaboratorioResource {
@@ -36,6 +39,8 @@ public class LaboratorioResource {
 	private ApplicationEventPublisher publisher;
 
 	@PostMapping
+	@ApiOperation(value = "Cadastrar Laborat\u00f3rio", response = Laboratorio.class,
+	notes = "Essa opera\u00e7\u00e3o cadastra um laborat\u00f3rio e uma lista de endere\u00e7os")
 	public ResponseEntity<Laboratorio> salvarLaboratorio(@Valid @RequestBody Laboratorio laboratorio, HttpServletResponse response) {
 		Laboratorio laboratorioSalvo = laboratorioService.salvarLaboratorio(laboratorio);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, laboratorioSalvo.getId()));
@@ -43,12 +48,16 @@ public class LaboratorioResource {
 	}
 
 	@PutMapping("/{codigo}")
+	@ApiOperation(value = "Atualizar um Laborat\u00f3rio", response = Laboratorio.class,
+	notes = "Essa opera\u00e7\u00e3o um laborat\u00f3rio e uma lista de endere\u00e7os")
 	public ResponseEntity<Laboratorio> atualizarLaboratorio(@PathVariable Long codigo, @RequestBody Laboratorio laboratorio) {
 		Laboratorio laboratorioSalvo = laboratorioService.atualizarLaboratorio(codigo, laboratorio);
 		return ResponseEntity.ok(laboratorioSalvo);
 	}
 
 	@GetMapping("/ativos")
+	@ApiOperation(value = "Buscar laborat\u00f3rios ativos", response = Laboratorio.class,
+	notes = "Essa opera\u00e7\u00e3o lista os laborat\u00f3rios com status ativo.")
 	public ResponseEntity<Page<Laboratorio>> listarLaboratoriosAtivos(LaboratorioFilter filter, Pageable pageable) {
 		filter.setStatus(Status.ATIVO);
 		Page<Laboratorio> laboratorios = laboratorioService.filtrarLaboratorio(filter, pageable);
@@ -56,12 +65,16 @@ public class LaboratorioResource {
 	}
 
 	@GetMapping("/{codigo}")
+	@ApiOperation(value = "Buscar laborat\u00f3rio", response = Laboratorio.class,
+	notes = "Essa opera\u00e7\u00e3o busca pelo c\u00f3digo do laborat\u00f3rio com status ativo.")
 	public ResponseEntity<Laboratorio> buscarLaboratorioPeloCodigo(@PathVariable Long codigo) {
 		Laboratorio laboratorio = laboratorioService.buscarLaboratorioPeloCodigo(codigo);
 		return ResponseEntity.ok(laboratorio);
 	}
 
 	@DeleteMapping("/{codigo}")
+	@ApiOperation(value = "Remove um laboratório", response = Laboratorio.class,
+	notes = "Essa opera\u00e7\u00e3o remove um laboratório logicamente com status inativo.")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativarLaboratorio(@PathVariable Long codigo) {
 		laboratorioService.inativarLaboratorio(codigo);

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author aishac
  *
@@ -36,24 +38,29 @@ public class Exame implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
+	@ApiModelProperty(value = "C\u00f3digo do exame")
 	private Long id;
 
 	@NotBlank(message = "labexame-exa-nam")
 	@Column(name = "NOME")
+	@ApiModelProperty(value = "Nome do exame")
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "labexame-exa-tip")
 	@Column(name = "TIPO")
+	@ApiModelProperty(value = "Tipo do exame")
 	private TipoExame tipo;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
+	@ApiModelProperty(value = "Status do exame")
 	private Status status;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "TB_EXAME_LABORATORIO", joinColumns = @JoinColumn(name = "ID_EXAME")
 		, inverseJoinColumns = @JoinColumn(name = "ID_LABORATORIO"))
+	@ApiModelProperty(value = "Laborat\u00f3rios associados ao exame")
 	private List<Laboratorio> laboratorios;
 
 	/**

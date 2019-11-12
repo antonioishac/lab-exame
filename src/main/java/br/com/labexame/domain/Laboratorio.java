@@ -18,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author aishac
  *
@@ -36,18 +38,22 @@ public class Laboratorio implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
+	@ApiModelProperty(value = "C\u00f3digo do laborat\u00f3rio")
 	private Long id;
 
 	@NotBlank(message = "labexame-lab-nom")
 	@Column(name = "NOME")
+	@ApiModelProperty(value = "Nome do laborat\u00f3rio")
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
+	@ApiModelProperty(value = "Status do laborat\u00f3rio")
 	private Status status;
 
 	@JsonIgnoreProperties("laboratorio")
 	@OneToMany(mappedBy = "laboratorio", orphanRemoval = true, cascade = CascadeType.ALL)
+	@ApiModelProperty(value = "Endere\u00e7os do laborat\u00f3rio")
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	/**
