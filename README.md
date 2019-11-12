@@ -1,10 +1,18 @@
 # API para manutenção de laboratórios e exames
 
+#  Arquitetura do projeto
+	Projeto desenvolvido com Spring Boot, Spring Data JPA com Hibernate,
+	Validação com Bean Validation e mensagens configuradas em um arquivo .properties,
+	Controlando as exceptions da API com ExceptionHandler utilizando a arquitetura RestControllerAdvice,
+	Utilização do Criteria, CriteriaBuilder e CriteriaQuery, utilização de Metamodel,
+	Nivel de maturiade Richardson, utilização de URI, HTTP Methods e HATEOAS (Hypermedia).
+	Banco de dados MySql, criação dos scripts com a utilização do Flyway
+
 ## Instrução de uso da API
 
 Estamos desenvolvendo uma aplicação para as seguintes situações:
 
-##- Laboratório:
+## Laboratório:
 ##	cadastrar um novo laborário;
 	POST - https://lab-exame.herokuapp.com/api/laboratorio
 
@@ -50,46 +58,91 @@ Estamos desenvolvendo uma aplicação para as seguintes situações:
 	DELETE - https://lab-exame.herokuapp.com/api/laboratorio/2
 
 
-- Exames:
-  - cadastrar um novo exame;
-  - obter uma lista de exames ativos;
-  - atualizar um exame existente;
-  - remover logicamente um exame ativo.
+## Exames:
+##  	cadastrar um novo exame;
+	POST - https://lab-exame.herokuapp.com/api/exame
+	{
+	  "nome": "EXAME COLESTEROL",
+	  "tipo": "ANALISE"
+	}
 
-- Associação:
-  - associar um exame ativo à um laboratório ativo;
-  - desassociar um exame ativo de um laboratório ativo;
+##	cadastrar um novo exame com um ou mais laboratórios
+	POST - https://lab-exame.herokuapp.com/api/exame
+	{
+	  "nome": "EXAME DIABETE",
+	  "tipo": "ANALISE",
+	  "laboratorios": [
+		{	
+		  "id": "1"
+		}
+	  ]
+	}
 
-  **Importante:**
 
-  - Um exame pode estar associado a mais de um laboratório;
-  - O cadastro de um laboratório/exame é considerado ativo e recebe um `id` gerado automaticamente.
+## 	obter uma lista de exames ativos;
+	GET - https://lab-exame.herokuapp.com/api/exame/ativos
 
-### Informações
+##	atualizar um exame existente;
+	PUT - https://lab-exame.herokuapp.com/api/exame/1
 
-- Laboratório
-  - nome
-  - endereço
-  - status [ativo, inativo]
+	{
+	  "nome": "EXAME COLTESTEROL ALTERADO",
+	  "tipo": "ANALISE",
+	  "laboratorios": [
+		{	
+		  "id": "1"
+		}
+	  ]
+	}
 
-- Exame
-  - nome
-  - tipo [analise clinica, imagem]
-  - status [ativo, inativo]
+##	remover logicamente um exame ativo.
+	DELETE - https://lab-exame.herokuapp.com/api/exame/3
+
+## Associação:
+##	associar um exame ativo à um laboratório ativo;
+	PUT - https://lab-exame.herokuapp.com/api/exame/1
+
+	{
+	  "nome": "EXAME COLTESTEROL ALTERADO",
+	  "tipo": "ANALISE",
+	  "laboratorios": [
+		{	
+		  "id": "1"
+		},
+		{
+		  "id": "3"
+		}
+	  ]
+	}
+
+##	desassociar um exame ativo de um laboratório ativo;
+	PUT - https://lab-exame.herokuapp.com/api/exame/1
+	{
+	  "nome": "EXAME COLTESTEROL ALTERADO",
+	  "tipo": "ANALISE",
+	  "laboratorios": [
+		{
+		  "id": "3"
+		}
+	  ]
+	}
 
 ## Funcionalidades extras
 
-- Possibilidade de executar cadastro, atualização e remoção em lote;
-- Endpoint que faz a busca por nome do exame e retorna todos os laboratorios associados a esse exame.
+##	remoção em lote;
+	DELETE - https://lab-exame.herokuapp.com/api/exame/remover/2
 
-## Requisitos técnicos
+##	Endpoint que faz a busca por nome do exame e retorna todos os laboratorios associados a esse exame.
+	GET - https://lab-exame.herokuapp.com/api/exame/ativos?nome=COLESTEROL
 
-- Desenvolver usando *Java 8+*
-- Serviço deve respeitar os princípios RESTFul
-- Criar um `README.md` (arquitetura, instruções de uso, entre outros)
 
 ## Diferenciais
 
-- Publicação do ambiente em um serviço cloud de hospedagens (Heroku, AWS, GCP, etc)
-- Configurar a aplicação para rodar em um container
-- Documentação da API
+##	Publicação do ambiente em um serviço cloud de hospedagens (Heroku, AWS, GCP, etc)
+	https://lab-exame.herokuapp.com
+
+##	Configurar a aplicação para rodar em um container
+	Projeto configurado com o arquivo Dockerfile.	
+
+##	Documentação da API
+	https://lab-exame.herokuapp.com/swagger-ui.html
