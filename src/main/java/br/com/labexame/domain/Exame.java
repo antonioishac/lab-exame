@@ -35,6 +35,7 @@ public class Exame implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long id;
 
 	@NotBlank(message = "labexame-exa-nam")

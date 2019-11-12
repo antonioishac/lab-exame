@@ -18,7 +18,7 @@ spring:
       org.hibernate.envers.store_data_at_delete: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/labexame?useSSL=false
+    url: jdbc:mysql://localhost:3306/lab-exame?useSSL=false
     username: root
     password: jesuscristo
     hikari:
