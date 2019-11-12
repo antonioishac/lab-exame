@@ -53,11 +53,13 @@ public class LaboratorioService {
 	public Laboratorio atualizarLaboratorio(Long codigo, Laboratorio laboratorio) {
 		Optional<Laboratorio> laboratorioSalvo = laboratorioRepository.findById(codigo);
 
-		laboratorioSalvo.get().getEnderecos().clear();
-		laboratorioSalvo.get().getEnderecos().addAll(laboratorio.getEnderecos());
-		laboratorioSalvo.get().getEnderecos().forEach(e -> e.setLaboratorio(laboratorio));
+		if (laboratorio.getEnderecos() != null) {
+			laboratorioSalvo.get().getEnderecos().clear();
+			laboratorioSalvo.get().getEnderecos().addAll(laboratorio.getEnderecos());
+			laboratorioSalvo.get().getEnderecos().forEach(c -> c.setLaboratorio(laboratorioSalvo.get()));
+		}
 
-		BeanUtils.copyProperties(laboratorio, laboratorioSalvo, "id", "enderecos");
+		BeanUtils.copyProperties(laboratorio, laboratorioSalvo.get(), "id", "status", "enderecos");
 
 		return laboratorioRepository.save(laboratorioSalvo.get());
 	}
@@ -89,4 +91,19 @@ public class LaboratorioService {
 		}
 		laboratorioRepository.remover(Status.INATIVO, codigo);
 	}
+
+	/**
+	 * M\u00e9todo para buscar um Laboratorio pelo c\u00f3digo
+	 *
+	 * @param codigo
+	 * @return Laboratorio
+	 */
+	public Laboratorio buscarLaboratorioPeloCodigo(Long codigo) {
+		Optional<Laboratorio> existeLaboratorio = laboratorioRepository.findById(codigo);
+		if (!existeLaboratorio.isPresent()) {
+			throw new LaboratorioNaoExisteException();
+		}
+		return existeLaboratorio.get();
+	}
+
 }

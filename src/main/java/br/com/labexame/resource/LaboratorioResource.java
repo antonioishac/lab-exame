@@ -1,8 +1,10 @@
 package br.com.labexame.resource;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.labexame.domain.Laboratorio;
 import br.com.labexame.domain.Status;
+import br.com.labexame.event.RecursoCriadoEvent;
 import br.com.labexame.service.LaboratorioService;
 import br.com.labexame.service.filter.LaboratorioFilter;
 
@@ -29,13 +32,17 @@ public class LaboratorioResource {
 	@Autowired
 	private LaboratorioService laboratorioService;
 
-	@PostMapping("/salvar")
-	public ResponseEntity<Laboratorio> salvarLaboratorio(@Valid @RequestBody Laboratorio laboratorio) {
+	@Autowired
+	private ApplicationEventPublisher publisher;
+
+	@PostMapping
+	public ResponseEntity<Laboratorio> salvarLaboratorio(@Valid @RequestBody Laboratorio laboratorio, HttpServletResponse response) {
 		Laboratorio laboratorioSalvo = laboratorioService.salvarLaboratorio(laboratorio);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, laboratorioSalvo.getId()));
 		return ResponseEntity.ok(laboratorioSalvo);
 	}
 
-	@PutMapping("/alterar/{codigo}")
+	@PutMapping("/{codigo}")
 	public ResponseEntity<Laboratorio> atualizarLaboratorio(@PathVariable Long codigo, @RequestBody Laboratorio laboratorio) {
 		Laboratorio laboratorioSalvo = laboratorioService.atualizarLaboratorio(codigo, laboratorio);
 		return ResponseEntity.ok(laboratorioSalvo);
@@ -48,7 +55,13 @@ public class LaboratorioResource {
 		return laboratorios == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(laboratorios);
 	}
 
-	@DeleteMapping("/revomer/{codigo}")
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Laboratorio> buscarLaboratorioPeloCodigo(@PathVariable Long codigo) {
+		Laboratorio laboratorio = laboratorioService.buscarLaboratorioPeloCodigo(codigo);
+		return ResponseEntity.ok(laboratorio);
+	}
+
+	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void removerLaboratorio(@PathVariable Long codigo) {
 		laboratorioService.removerLaboratorio(codigo);
