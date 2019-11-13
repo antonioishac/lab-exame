@@ -142,7 +142,9 @@ Estamos desenvolvendo uma aplicação para as seguintes situações:
 	https://lab-exame.herokuapp.com
 
 ##	Configurar a aplicação para rodar em um container
-	Projeto configurado com o arquivo Dockerfile.	
+	Projeto configurado com para geração da imagem docker.
+	Projeto publicado no docker hub: https://hub.docker.com/r/aishac/labexame
+	Comando para subir a imagem docker: docker run -p 8080:8080 -t --network host aishac/labexame:01	
 
 ##	Documentação da API
 	https://lab-exame.herokuapp.com/swagger-ui.html
