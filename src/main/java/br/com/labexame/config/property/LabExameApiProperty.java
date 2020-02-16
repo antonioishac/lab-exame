@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("labexame")
 public class LabExameApiProperty {
 
-	private String originPermitida = "http://localhost:8080";
+	private String originPermitida = "http://localhost:4200";
 
 	public String getOriginPermitida() {
 		return originPermitida;
